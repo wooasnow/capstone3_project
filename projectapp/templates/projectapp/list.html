@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <style>
+    .container {
+        padding:0;
+        margin: auto;
+    }
+    .container div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 1rem;
+        flex-direction: column;
+
+    }
+    .container img{
+        width: 7rem;
+        height:7rem;
+        object-fit : cover;
+        border-radius: 1rem;
+    }
+    </style>
+
+    {% if project_list %}
+        <div class="container">
+            {% for project in project_list %}
+                <a href="{% url 'projectapp:detail' pk=project.pk %}">
+                    {% include 'snippets/card_project.html'%}
+                </a>
+            {% endfor %}
+        </div>
+        <script src="{% static 'js/magicgrid.js' %}"></script>
+    {% else %}
+        <div class="text-center">
+            <h2>갤러리가 없습니다.</h2>
+        </div>
+    {% endif %}
+    {% include 'snippets/pagination.html' with page_obj=page_obj %}
+    <div style="text-align: center">
+        <a href="{% url 'projectapp:create' %}" class="btn btn-dark col-3 mt-3 mb-3">
+            갤러리 생성
+        </a>
+    </div>
+{% endblock %}
