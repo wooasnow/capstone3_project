@@ -1,0 +1,42 @@
+{% extends 'base.html'%}
+{%  load static %}
+{% block content %}
+    <style>
+        .container div {
+            width: 250px;
+
+            background-color: antiquewhite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+        .container img{
+            width:100%;
+
+
+        }
+    </style>
+
+    {% if article_list %}
+    <div class="container">
+        {% for article in article_list %}
+        <a href="{% url 'articleapp:detail' pk=article.pk %}">
+            {% include 'snippets/card.html' with article=article %}
+        </a>
+        {% endfor %}
+    </div>
+        <script src="{%  static 'js/magicgrid.js' %}"></script>
+    {% else %}
+    <div class="text-center">
+        <h1>게시글이 존재하지 않습니다.</h1>
+    </div>
+    {% endif %}
+    {% include 'snippets/pagination.html' with page_obj=page_obj %}
+    <div style="text-align: center">
+        <a href="{% url 'articleapp:create' %}" class="btn btn-primary col-3 mt-3 mb-3" >
+             글쓰기
+        </a>
+    </div>
+
+{% endblock %}
